@@ -7,4 +7,5 @@ add_executable(Rubik_sCubeSolver main.cpp
         Model/RubiksCube.cpp
         Model/RubiksCube.h
         Model/RubiksCube3dArray.cpp
-        Model/RubiksCube1dArray.cpp)
+        Model/RubiksCube1dArray.cpp
+)
