@@ -1,6 +1,4 @@
-//
-// Created by devan on 26-06-2025.
-//
+
 
 #include "RubiksCube.h"
 
