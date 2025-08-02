@@ -18,36 +18,29 @@ private:
 
     //    bfs() -> performs breadth-first-search and returns a solved Rubik's Cube
     //    move_done[] -> Back-Pointer map as to how we reached that state
-
     T bfs() {
         queue<T> q;
-        q.push_back(rubiksCube);
+        q.push(rubiksCube);
         visited[rubiksCube] = true;
 
         while (!q.empty()) {
             T node = q.front();
             q.pop();
-
             if (node.isSolved()) {
                 return node;
             }
 
             for (int i=0;i<18;i++) {
                 auto curr_move = RubiksCube::MOVE(i);
-
                 node.move(curr_move);
-
                 if (!visited[node]) {
                     visited[node] = true;
-                    q.push(node);
                     move_done[node] = curr_move;
+                    q.push(node);
                 }
-
                 node.invert(curr_move);
             }
-
         }
-
         return rubiksCube;
     }
 
@@ -58,20 +51,18 @@ public:
         rubiksCube = _rubiksCube;
     }
 
-  // Perform BFS and returns the vector of moves done to solve the cube
+    //    Performs BFS and returns the vector of moves done to solve the cube
     vector<RubiksCube::MOVE> solve() {
         T solved_cube = bfs();
-
-        // assert(solved_cube.isSolved());
-
+        assert(solved_cube.isSolved());
         T curr_cube = solved_cube;
-        while (curr_cube != rubiksCube) {
+        while (!(curr_cube == rubiksCube)) {
             RubiksCube::MOVE curr_move = move_done[curr_cube];
             moves.push_back(curr_move);
             curr_cube.invert(curr_move);
         }
         rubiksCube = solved_cube;
-        reverse(moves.begin(),moves.end());
+        reverse(moves.begin(), moves.end());
         return moves;
     }
 };

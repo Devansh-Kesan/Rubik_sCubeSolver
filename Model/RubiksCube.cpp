@@ -1,5 +1,4 @@
 
-
 #include "RubiksCube.h"
 
 //
@@ -7,7 +6,7 @@
 //
 
 char RubiksCube::getColorLetter(COLOR color) {
-    switch (color){
+    switch (color) {
         case COLOR::BLUE:
             return 'B';
         case COLOR::GREEN:
@@ -110,7 +109,6 @@ RubiksCube &RubiksCube::move(MOVE ind) {
             return this->b2();
     }
 }
-
 
 /*
  * Invert a move.
@@ -322,16 +320,7 @@ uint8_t RubiksCube::getCornerOrientation(uint8_t ind) const {
 
     if (corner[1] == actual_str[0]) {
         return 1;
-    }else if (corner[2] == actual_str[1]) {
+    } else if (corner[2] == actual_str[0]) {
         return 2;
-    }else {
-        return 0;
-    }
+    } else return 0;
 }
-
-
-
-
-
-
-

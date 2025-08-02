@@ -28,7 +28,6 @@ public:
             DFSSolver<T,H> dfsSolver(rubiksCube,i);
 
             moves = dfsSolver.solve();
-
             if (dfsSolver.rubiksCube.isSolved()) {
                 rubiksCube = dfsSolver.rubiksCube;
                 break;

@@ -1,5 +1,3 @@
-
-
 #include "RubiksCube.h"
 
 class RubiksCube1dArray : public RubiksCube {
@@ -240,7 +238,6 @@ public:
         for (int i=0;i<54;i++) {
             if (cube[i] != r1.cube[i]) return false;
         }
-
         return true;
     }
 
