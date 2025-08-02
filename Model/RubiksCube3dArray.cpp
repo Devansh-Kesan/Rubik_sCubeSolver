@@ -1,52 +1,49 @@
 
-
 #include "RubiksCube.h"
 
 class RubiksCube3dArray : public RubiksCube {
-private :
+private:
 
-    // The function rotates a single face of a Rubik’s Cube 90 degrees clockwise
     void rotateFace(int ind) {
-
-        for (int i = 0; i < 3 / 2; ++i) {
-            for (int j = i; j < 3 - i - 1; ++j) {
-                char temp = cube[ind][i][j];
-                cube[ind][i][j] = cube[ind][2 - j][i];
-                cube[ind][2 - j][i] = cube[ind][2 - i][2 - j];
-                cube[ind][2 - i][2 - j] = cube[ind][j][2 - i];
-                cube[ind][j][2 - i] = temp;
+        char temp_arr[3][3] = {};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                temp_arr[i][j] = cube[ind][i][j];
             }
         }
+        for (int i = 0; i < 3; i++) cube[ind][0][i] = temp_arr[2 - i][0];
+        for (int i = 0; i < 3; i++) cube[ind][i][2] = temp_arr[0][i];
+        for (int i = 0; i < 3; i++) cube[ind][2][2 - i] = temp_arr[i][2];
+        for (int i = 0; i < 3; i++) cube[ind][2 - i][0] = temp_arr[2][2 - i];
     }
 
-public :
+public:
     char cube[6][3][3]{};
 
     RubiksCube3dArray() {
-        for (int i=0; i<6; i++) {
-            for (int j=0;j<3;j++) {
-                for (int k=0;k<3;k++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++)
                     cube[i][j][k] = getColorLetter(COLOR(i));
-                }
             }
         }
     }
 
-    COLOR getColor(FACE face,unsigned row, unsigned col) const override {
+    COLOR getColor(FACE face, unsigned row, unsigned col) const override {
         char color = cube[int(face)][row][col];
         switch (color) {
-            case 'W':
-                return COLOR::WHITE;
-            case 'G':
-                return COLOR::GREEN;
-            case 'R':
-                return COLOR::RED;
             case 'B':
                 return COLOR::BLUE;
+            case 'R':
+                return COLOR::RED;
+            case 'G':
+                return COLOR::GREEN;
             case 'O':
                 return COLOR::ORANGE;
-            default:
+            case 'Y':
                 return COLOR::YELLOW;
+            default:
+                return COLOR::WHITE;
         }
     }
 
@@ -231,9 +228,9 @@ public :
     }
 
     bool operator==(const RubiksCube3dArray &r1) const {
-        for (int i=0;i<6;i++) {
-            for (int j=0;j<3;j++) {
-                for (int k=0;k<3;k++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
                     if (r1.cube[i][j][k] != cube[i][j][k]) return false;
                 }
             }
@@ -242,9 +239,9 @@ public :
     }
 
     RubiksCube3dArray &operator=(const RubiksCube3dArray &r1) {
-        for (int i=0;i<6;i++) {
-            for (int j=0;j<3;j++) {
-                for (int k=0;k<3;k++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
                     cube[i][j][k] = r1.cube[i][j][k];
                 }
             }
@@ -256,14 +253,14 @@ public :
 struct Hash3d {
     size_t operator()(const RubiksCube3dArray &r1) const {
         string str = "";
-        for (int i=0;i<6;i++) {
-            for (int j=0;j<3;j++) {
-                for (int k=0;k<3;k++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
                     str += r1.cube[i][j][k];
                 }
             }
         }
-
         return hash<string>()(str);
     }
+
 };
